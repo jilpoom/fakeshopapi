@@ -1,10 +1,12 @@
 package org.palad.fakeshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.palad.fakeshop.domain.Category;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +27,12 @@ public class ProductDTO {
 
     private String category;
 
-    private String image;
+    public void setCategory(String category) {
+        String name = Category.getCategoryByValue(category);
+        this.category = name;
+    }
 
+    private String image;
 
     @JsonIgnore
     private Double rate;
@@ -34,6 +40,8 @@ public class ProductDTO {
     @JsonIgnore
     private Long count;
 
+
+    //TODO : rate, count null 처리
     public Map<String, Number> getRating() {
         Map<String, Number> map = new HashMap<>();
         map.put("rate", rate);

@@ -3,12 +3,17 @@ package org.palad.fakeshop.repository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.palad.fakeshop.domain.Category;
 import org.palad.fakeshop.domain.Product;
+import org.palad.fakeshop.dto.ProductDTO;
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.parameters.P;
+
+import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -16,6 +21,9 @@ public class ProductRepositoryTests {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Test
     @DisplayName("Product Insert Tests")
@@ -66,9 +74,49 @@ public class ProductRepositoryTests {
             productRepository.save(product);
         }
 
+    }
+
+    @Test
+    @DisplayName("특정 카테고리별 제품 가져오기")
+    public void allProductByCategory() {
+
+        String category =  "mansclothing";
+
+        List<Product> list = productRepository.getProductsByCategory("MAN_CLOTHING");
+
+        list.forEach(product -> log.info(product));
+    }
+
+    @Test
+    @DisplayName("PRODUCT INSERT")
+    public void InsertProduct() {
+
+        Product product = Product.builder()
+                .title("NEW ITEM")
+                .price(10000L)
+                .description("NEW ITEM Description")
+                .image("newitem.jpg")
+                .build();
+
+        productRepository.save(product);
+    }
+
+    @Test
+    @DisplayName("PRODUCT UPDATE")
+    public void updateProductTest() {
+
+        ProductDTO productDTO = ProductDTO.builder()
+                .title("change title")
+                .pid(1L)
+                .price(1000L)
+                .category("cap")
+                .build();
+
+        Product product = modelMapper.map(productDTO, Product.class);
+
+        productRepository.save(product);
 
 
     }
-
 
 }
