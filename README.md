@@ -5,6 +5,15 @@
 - 이 프로젝트는 FakeStoreAPI를 스프링 부트를 통해 제작합니다.
 - 완벽하게 똑같진 않으며, 미국 주소를 한국 주소로 변경하는 등의 수정이 이루어질 계획입니다.
 
+# 📌 사용 기술
+
+- Spring Boot
+- Spring Data JPA
+- MariaDB
+- Spring Security (적용 예정)
+- JWT (적용 예정)
+- Swagger-UI
+
 
 # 📌 DB 설계
 
