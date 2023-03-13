@@ -17,7 +17,8 @@
 
 # 📌 DB 설계
 
-![image](https://user-images.githubusercontent.com/64225078/224550844-ad21f411-c7c8-4d8d-91e2-e6fd1e654b7d.png)
+![image](https://user-images.githubusercontent.com/64225078/224736049-21d91c8b-dd97-4232-b303-6ddffafcb946.png)
+
 
 
 # 📌 자원 식별(URI 정의)
@@ -123,7 +124,7 @@
 
 ## 상품 정렬 후 조회
 
-GET /products?sort=desc
+### GET /products?sort=desc
 
 ```json
 [
@@ -156,7 +157,7 @@ GET /products?sort=desc
 
 ## 카테고리 조회
 
-GET /products/categories
+### GET /products/categories
 
 ```json
 ["mansclothing","womansclothing","backpack","cap"]
@@ -164,7 +165,7 @@ GET /products/categories
 
 ## 카테고리별 품목 조회
 
-GET /products/category/{category}
+### GET /products/category/{category}
 
 ```json
 [
@@ -198,7 +199,7 @@ GET /products/category/{category}
 
 ## 품목 입력
 
-POST /products
+### POST /products
 
 RequestBody
 
@@ -231,7 +232,7 @@ ResponseBody
 
 ## 품목 변경
 
-PUT /products
+### PUT /products
 
 ```json
 {
@@ -261,7 +262,7 @@ PUT /products
 
 ## 품목 삭제
 
-DELETE /products/{pid}
+### DELETE /products/{pid}
 
 ```json
 {
@@ -278,5 +279,221 @@ DELETE /products/{pid}
 }
 ```
 
+# 📌 User
 
-...진행중(22.3.13)
+## 회원 전체 조회
+
+### GET /users
+
+ResponseBody
+
+```json
+[
+  {
+    "uid": 2,
+    "email": "user1@naver.com",
+    "username": "user1",
+    "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
+    "joindate": [
+      2023,
+      3,
+      13
+    ],
+    "phone": "010-4450-9299",
+    "name": {
+      "firstname": "편",
+      "lastname": "도월"
+    },
+    "address": {
+      "zipcode": "30703",
+      "address": "인천광역시",
+      "latitude": 0.15274496147532424,
+      "longitude": 0.6167202568436756
+    }
+  },
+...
+```
+
+## 개별 회원 조회
+
+### GET /users/{uid}
+
+ResponseBody
+
+```json
+{
+  "uid": 2,
+  "email": "user1@naver.com",
+  "username": "user1",
+  "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
+  "joindate": [
+    2023,
+    3,
+    13
+  ],
+  "phone": "010-4450-9299",
+  "name": {
+    "firstname": "편",
+    "lastname": "도월"
+  },
+  "address": {
+    "zipcode": "30703",
+    "address": "인천광역시",
+    "latitude": 0.15274496147532424,
+    "longitude": 0.6167202568436756
+  }
+}
+```
+
+## 회원수 별 조회
+
+### GET /users?limit={number}
+
+ResponseBody
+
+```json
+[
+  {
+    "uid": 2,
+    "email": "user1@naver.com",
+    "username": "user1",
+    "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
+    "joindate": [
+      2023,
+      3,
+      13
+    ],
+    "phone": "010-4450-9299",
+    "name": {
+      "firstname": "편",
+      "lastname": "도월"
+    },
+    "address": {
+      "zipcode": "30703",
+      "address": "인천광역시",
+      "latitude": 0.15274496147532424,
+      "longitude": 0.6167202568436756
+    }
+  },
+  {
+    "uid": 3,
+    "email": "user2@naver.com",
+    "username": "user2",
+    "password": "$2a$10$tXXejpGE2f8t48930mKKoeyYFcEPdWIC0b2Y2.NtBpYsUMTBA5/96",
+    "joindate": [
+      2023,
+      3,
+      13
+    ],
+    "phone": "010-5623-0312",
+    "name": {
+      "firstname": "금",
+      "lastname": "린오"
+    },
+    "address": {
+      "zipcode": "11965",
+      "address": "울산광역시",
+      "latitude": 0.615849859140715,
+      "longitude": 0.9337544027188417
+    }
+  }
+
+...
+```
+
+## 회원 정렬 후 조회
+
+### GET /users?sort=desc
+
+ResponseBody
+
+```json
+[
+  {
+    "uid": 102,
+    "email": "123@123.com",
+    "username": "username00",
+    "password": "1234",
+    "joindate": [
+      2023,
+      3,
+      13
+    ],
+    "phone": "010-0000-0000",
+    "name": {
+      "firstname": null,
+      "lastname": null
+    },
+    "address": {
+      "zipcode": null,
+      "address": null,
+      "latitude": null,
+      "longitude": null
+    }
+  },
+  {
+    "uid": 101,
+    "email": "user0@naver.com",
+    "username": "user0",
+    "password": "$2a$10$I50jBgMF6.4mpI6OEYaiN.F0oWRjnJXZNKGrBpZpnSz9vzoN.IIfG",
+    "joindate": [
+      2023,
+      3,
+      13
+    ],
+    "phone": "010-1069-0170",
+    "name": {
+      "firstname": "홍",
+      "lastname": "령혼"
+    },
+    "address": {
+      "zipcode": "81947",
+      "address": "광주광역시",
+      "latitude": 0.841411071415164,
+      "longitude": 0.6525690452565338
+    }
+  },
+  ...
+```
+
+## 회원 등록 (수정중)
+
+### POST /users
+
+```json
+
+```
+
+## 회원 삭제
+
+### DELETE /users/{uid}
+
+ResponseBody
+
+```json
+{
+  "uid": 2,
+  "email": "user1@naver.com",
+  "username": "user1",
+  "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
+  "joindate": [
+    2023,
+    3,
+    13
+  ],
+  "phone": "010-4450-9299",
+  "name": {
+    "firstname": "편",
+    "lastname": "도월"
+  },
+  "address": {
+    "zipcode": "30703",
+    "address": "인천광역시",
+    "latitude": 0.15274496147532424,
+    "longitude": 0.6167202568436756
+  }
+}
+```
+
+
+...진행중(22.3.14)
