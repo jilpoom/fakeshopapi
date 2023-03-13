@@ -1,2 +1,12 @@
-package org.palad.fakeshop.dto.exception;public class ErrorDTO {
+package org.palad.fakeshop.dto.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ErrorDTO {
+
+    private String code;
+    private String message;
 }

@@ -7,8 +7,10 @@ import org.palad.fakeshop.domain.Category;
 import org.palad.fakeshop.dto.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,6 +26,7 @@ public class ProductController {
                                         @RequestParam(required = false) String sort) {
 
         if(limit != null) {
+
             return productService.getProductsWithLimit(Integer.parseInt(limit));
         }
 
@@ -37,8 +40,14 @@ public class ProductController {
     }
 
     @GetMapping("/{pid}")
-    public ProductDTO getProduct(@PathVariable Long pid) {
-        return productService.getProductById(pid);
+    public ProductDTO getProduct(@PathVariable String pid) {
+
+        if(pid.matches("[A-Za-z](.*)")) {
+            throw new NumberFormatException("unvalid variable");
+        }
+
+
+        return productService.getProductById(Long.valueOf(pid));
     }
 
     @GetMapping("/categories")
@@ -52,8 +61,14 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO) {
+    public ProductDTO addProduct(@Valid @RequestBody ProductDTO productDTO, BindingResult bindingResult) {
+
         log.info(productDTO);
+
+        if(bindingResult.hasErrors()) {
+
+        }
+
         productService.addProduct(productDTO);
 
         return productDTO;

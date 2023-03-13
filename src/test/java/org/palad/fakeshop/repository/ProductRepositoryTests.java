@@ -51,21 +51,23 @@ public class ProductRepositoryTests {
         for(int i = 0; i < 100; i++) {
             String category = "";
 
-            if(i % 4 == 0) {
-                category = Category.MAN_CLOTHING.name();
-            } else if (i % 4 == 1) {
-                category = Category.WOMAN_CLOTHING.name();
-            } else if (i % 4 == 2) {
-                category = Category.BACKPACK.name();
-            } else if (i % 4 == 3) {
-                category = Category.CAP.name();
+            if(i % 5 == 0) {
+                category = Category.MAN_CLOTHING.getValue();
+            } else if (i % 5 == 1) {
+                category = Category.WOMAN_CLOTHING.getValue();
+            } else if (i % 5 == 2) {
+                category = Category.BACKPACK.getValue();
+            } else if (i % 5 == 3) {
+                category = Category.CAP.getValue();
+            } else {
+                category = Category.ETC.getValue();
             }
 
             Product product = Product.builder()
                     .title(category + i)
                     .category(category)
                     .count(Long.valueOf(i))
-                    .description(category + "description")
+                    .description(category + " description")
                     .image(category + i + ".jpg")
                     .price(i * 1000L)
                     .rate((double) i % 10)
@@ -82,7 +84,9 @@ public class ProductRepositoryTests {
 
         String category =  "mansclothing";
 
-        List<Product> list = productRepository.getProductsByCategory("MAN_CLOTHING");
+        String enumCategory = Category.getCategoryByValue(category);
+
+        List<Product> list = productRepository.getProductsByCategory(enumCategory);
 
         list.forEach(product -> log.info(product));
     }
@@ -105,16 +109,23 @@ public class ProductRepositoryTests {
     @DisplayName("PRODUCT UPDATE")
     public void updateProductTest() {
 
-        ProductDTO productDTO = ProductDTO.builder()
-                .title("change title")
-                .pid(1L)
-                .price(1000L)
-                .category("cap")
-                .build();
+        Product product = productRepository.findById(3L).orElseThrow();
 
-        Product product = modelMapper.map(productDTO, Product.class);
+        log.info(product);
 
-        productRepository.save(product);
+        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+
+        log.info(productDTO);
+
+        productDTO.setCategory("mansclothing");
+        productDTO.setCount(1L);
+        productDTO.setRate(5.0);
+
+        Product updatedProduct = modelMapper.map(productDTO, Product.class);
+
+        log.info(updatedProduct);
+
+        productRepository.save(updatedProduct);
 
 
     }

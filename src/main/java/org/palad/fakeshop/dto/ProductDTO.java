@@ -2,12 +2,15 @@ package org.palad.fakeshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.palad.fakeshop.domain.Category;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,18 +22,17 @@ public class ProductDTO {
 
     private Long pid;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private Long price;
 
     private String description;
 
+    @NotBlank
     private String category;
 
-    public void setCategory(String category) {
-        String name = Category.getCategoryByValue(category);
-        this.category = name;
-    }
 
     private String image;
 

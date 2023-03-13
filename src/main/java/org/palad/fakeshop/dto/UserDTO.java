@@ -1,5 +1,6 @@
 package org.palad.fakeshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,10 @@ public class UserDTO {
 
     private LocalDate joindate;
 
+    @JsonIgnore
     private String firstname;
 
+    @JsonIgnore
     private String lastname;
 
     private String phone;
@@ -38,4 +41,24 @@ public class UserDTO {
         return map;
     }
 
+    @JsonIgnore
+    private String city;
+
+    @JsonIgnore
+    private String zipcode;
+
+    @JsonIgnore
+    private Double longitude;
+
+    @JsonIgnore
+    private Double latitude;
+
+    public Map<String, Object> getAddress() {
+        Map<String, Object> addressMap = new HashMap<>();
+        addressMap.put("address", city);
+        addressMap.put("zipcode", zipcode);
+        addressMap.put("longitude", longitude);
+        addressMap.put("latitude", latitude);
+        return addressMap;
+    }
 }

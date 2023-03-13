@@ -10,7 +10,11 @@ import java.util.List;
 
 public enum Category {
 
-    MAN_CLOTHING("mansclothing"), WOMAN_CLOTHING("womansclothing"), BACKPACK("backpack"), CAP("cap");
+    MAN_CLOTHING("mansclothing"),
+    WOMAN_CLOTHING("womansclothing"),
+    BACKPACK("backpack"),
+    CAP("cap"),
+    ETC("etc");
 
     private final String value;
 
@@ -41,7 +45,8 @@ public enum Category {
         }
 
         //TODO : null 일시 예외 처리
-        return null;
+        //ETC를 통한 default 처리
+        return Category.ETC.name();
      }
 
 }

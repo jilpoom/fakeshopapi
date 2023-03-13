@@ -27,6 +27,8 @@ public class RandomUserGenerater {
             "흔", "악", "람", "뜸", "권", "복", "심", "헌", "엽", "학", "개", "롱", "평", "늘", "늬", "랑", "얀", "향", "울", "련");
 
 
+    private static List<String> koreanCityList = Arrays.asList("서울특별시", "부산광역시", "대구광역시", "인천광역시", "광주광역시", "대전광역시", "울산광역시", "세종특별자치시", "경기도", "강원도(남한)");
+
     private static Random random = new Random();
 
     public static String getRandomKoreanFirstName() {
@@ -43,5 +45,38 @@ public class RandomUserGenerater {
     }
 
 
+    public static String getRandomPhoneNumber() {
+        String phoneNumber = "010-";
+
+        // 000-0000-0000
+
+        for(int i = 0; i < 8; i++) {
+            phoneNumber += random.nextInt(10);
+
+            if(i == 3) {
+                phoneNumber += "-";
+            }
+        }
+
+        return phoneNumber;
+    }
+
+    public static String getRandomZipCode() {
+        String zipcode = "";
+
+        for(int i = 0; i < 5; i++) {
+            zipcode += random.nextInt(10);
+        }
+
+        return zipcode;
+    }
+
+    public static String getRandomAddress () {
+        String address = "";
+
+        address += koreanCityList.get(random.nextInt(koreanCityList.size()));
+
+        return address;
+    }
 
 }

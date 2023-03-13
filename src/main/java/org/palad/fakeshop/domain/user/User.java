@@ -1,5 +1,7 @@
 package org.palad.fakeshop.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.collection.internal.PersistentList;
 import org.palad.fakeshop.domain.Product;
@@ -36,6 +38,15 @@ public class User {
     private String lastname;
 
     private String phone;
+
+    private String city;
+
+    private String zipcode;
+
+    private Double longitude;
+
+    private Double latitude;
+
 
 
 }
