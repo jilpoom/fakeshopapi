@@ -1,5 +1,6 @@
-package org.palad.fakeshop.dto;
+package org.palad.fakeshop.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,17 +26,10 @@ public class UserDTO {
 
     private LocalDate joindate;
 
-    private String firstname;
-
-    private String lastname;
-
     private String phone;
 
-    public Map<String, String> getName() {
-        Map<String, String> map = new HashMap<>();
-        map.put("firstname", firstname);
-        map.put("lastname", lastname);
-        return map;
-    }
+    private NameDTO name;
+
+    private AddressDTO address;
 
 }

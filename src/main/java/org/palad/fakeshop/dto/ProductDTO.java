@@ -1,15 +1,11 @@
 package org.palad.fakeshop.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.palad.fakeshop.domain.Category;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder
@@ -19,34 +15,33 @@ public class ProductDTO {
 
     private Long pid;
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private Long price;
 
     private String description;
 
+    @NotBlank
     private String category;
 
-    public void setCategory(String category) {
-        String name = Category.getCategoryByValue(category);
-        this.category = name;
-    }
 
     private String image;
 
-    @JsonIgnore
-    private Double rate;
+//    private Map<String, Number> rating;
+//
+//    //TODO : rate, count null 처리
+//
+//
+//    public void setRating(Map<String, Number> rating) {
+//        this.rating = rating;
+//    }
+//
+//    public Map<String, Number> getRating() {
+//        return rating;
+//    }
 
-    @JsonIgnore
-    private Long count;
-
-
-    //TODO : rate, count null 처리
-    public Map<String, Number> getRating() {
-        Map<String, Number> map = new HashMap<>();
-        map.put("rate", rate);
-        map.put("count", count);
-        return map;
-    }
+    private RatingDTO rating;
 
 }

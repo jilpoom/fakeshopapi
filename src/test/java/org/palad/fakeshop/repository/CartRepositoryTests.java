@@ -4,8 +4,6 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.palad.fakeshop.domain.Cart;
-import org.palad.fakeshop.domain.Category;
-import org.palad.fakeshop.domain.Product;
 import org.palad.fakeshop.domain.user.User;
 import org.palad.fakeshop.infra.repository.CartRepository;
 import org.palad.fakeshop.infra.repository.UserRepository;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @SpringBootTest
 @Log4j2

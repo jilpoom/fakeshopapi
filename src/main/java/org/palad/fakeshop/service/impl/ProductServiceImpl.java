@@ -1,16 +1,14 @@
 package org.palad.fakeshop.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.palad.fakeshop.domain.Category;
-import org.palad.fakeshop.domain.Product;
+import org.palad.fakeshop.domain.product.Category;
+import org.palad.fakeshop.domain.product.Product;
 import org.palad.fakeshop.dto.ProductDTO;
+
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.service.ProductService;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
