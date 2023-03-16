@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.palad.fakeshop.domain.user.User;
-import org.palad.fakeshop.dto.UserDTO;
+import org.palad.fakeshop.dto.user.UserDTO;
 import org.palad.fakeshop.infra.repository.UserRepository;
 import org.palad.fakeshop.util.RandomUserGenerater;
 import org.springframework.beans.factory.annotation.Autowired;

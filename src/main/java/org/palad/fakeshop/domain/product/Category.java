@@ -1,8 +1,4 @@
-package org.palad.fakeshop.domain;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+package org.palad.fakeshop.domain.product;
 
 import java.util.ArrayList;
 import java.util.List;

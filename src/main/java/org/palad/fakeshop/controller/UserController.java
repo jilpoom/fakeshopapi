@@ -1,15 +1,12 @@
 package org.palad.fakeshop.controller;
 
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.palad.fakeshop.dto.UserDTO;
+import org.palad.fakeshop.dto.user.UserDTO;
 import org.palad.fakeshop.service.UserService;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor

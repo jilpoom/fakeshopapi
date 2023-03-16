@@ -1,6 +1,6 @@
 package org.palad.fakeshop.service;
 
-import org.palad.fakeshop.dto.UserDTO;
+import org.palad.fakeshop.dto.user.UserDTO;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

@@ -1,9 +1,7 @@
 package org.palad.fakeshop.controller;
 
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.palad.fakeshop.domain.Category;
 import org.palad.fakeshop.dto.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.data.domain.Sort;

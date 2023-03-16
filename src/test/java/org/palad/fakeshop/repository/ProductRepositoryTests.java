@@ -4,14 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
-import org.palad.fakeshop.domain.Category;
-import org.palad.fakeshop.domain.Product;
+import org.palad.fakeshop.domain.product.Category;
+import org.palad.fakeshop.domain.product.Product;
 import org.palad.fakeshop.dto.ProductDTO;
 import org.palad.fakeshop.infra.repository.ProductRepository;
-import org.palad.fakeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -25,6 +23,9 @@ public class ProductRepositoryTests {
     @Autowired
     private ModelMapper modelMapper;
 
+
+
+
     @Test
     @DisplayName("Product Insert Tests")
     public void productInsert() {
@@ -35,8 +36,6 @@ public class ProductRepositoryTests {
                 .title("shirt")
                 .image("shirt.jpg")
                 .price(10000L)
-                .rate(3.2)
-                .count(100L)
                 .build();
 
 
@@ -66,11 +65,9 @@ public class ProductRepositoryTests {
             Product product = Product.builder()
                     .title(category + i)
                     .category(category)
-                    .count(Long.valueOf(i))
                     .description(category + " description")
                     .image(category + i + ".jpg")
                     .price(i * 1000L)
-                    .rate((double) i % 10)
                     .build();
 
             productRepository.save(product);
@@ -118,8 +115,6 @@ public class ProductRepositoryTests {
         log.info(productDTO);
 
         productDTO.setCategory("mansclothing");
-        productDTO.setCount(1L);
-        productDTO.setRate(5.0);
 
         Product updatedProduct = modelMapper.map(productDTO, Product.class);
 
@@ -127,7 +122,20 @@ public class ProductRepositoryTests {
 
         productRepository.save(updatedProduct);
 
+    }
 
+    @Test
+    @DisplayName("ProductDTO to Entity by productMapper")
+    public void productMapping() {
+
+       ProductDTO productDTO = ProductDTO.builder()
+               .title("test")
+               .pid(4L)
+               .price(10000L)
+               .category(Category.ETC.getValue())
+               .description("description")
+               .image("123.jpg")
+               .build();
     }
 
 }
