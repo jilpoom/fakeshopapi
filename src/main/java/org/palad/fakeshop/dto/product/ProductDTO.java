@@ -1,4 +1,4 @@
-package org.palad.fakeshop.dto;
+package org.palad.fakeshop.dto.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

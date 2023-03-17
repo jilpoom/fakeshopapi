@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.palad.fakeshop.domain.product.Category;
 import org.palad.fakeshop.domain.product.Product;
-import org.palad.fakeshop.dto.ProductDTO;
+import org.palad.fakeshop.dto.product.ProductDTO;
 
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.service.ProductService;

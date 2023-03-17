@@ -5,6 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.palad.fakeshop.domain.user.Address;
+import org.palad.fakeshop.domain.user.Name;
 import org.palad.fakeshop.domain.user.User;
 import org.palad.fakeshop.dto.user.UserDTO;
 import org.palad.fakeshop.infra.repository.UserRepository;
@@ -37,16 +39,10 @@ public class UserRepositoryTests {
     public void insertTest() {
 
         User user1 = User.builder()
-                .city("서울특별시 뭔구 뭔동 뭔 번지")
                 .email("123@123.com")
-                .firstname("홍")
-                .lastname("길동")
-                .latitude(new Random().nextDouble())
-                .longitude(new Random().nextDouble())
                 .phone("010-1111-1111")
                 .password(passwordEncoder.encode("1234"))
                 .joindate(LocalDate.now())
-                .zipcode("34253")
                 .username("user00")
                 .build();
 
@@ -61,17 +57,25 @@ public class UserRepositoryTests {
     public void allUserInsert() {
         for(int i = 0; i < 100; i++) {
 
-            User user1 = User.builder()
-                    .city(RandomUserGenerater.getRandomAddress())
-                    .email("user" + i + "@" + "naver.com")
-                    .firstname(RandomUserGenerater.getRandomKoreanFirstName())
-                    .lastname(RandomUserGenerater.getRandomKoreanLastName())
+            Address address = Address.builder()
+                    .zipcode(RandomUserGenerater.getRandomZipCode())
                     .latitude(new Random().nextDouble())
                     .longitude(new Random().nextDouble())
+                    .city(RandomUserGenerater.getRandomAddress())
+                    .build();
+
+            Name name = Name.builder()
+                    .firstname(RandomUserGenerater.getRandomKoreanFirstName())
+                    .lastname(RandomUserGenerater.getRandomKoreanLastName())
+                    .build();
+
+            User user1 = User.builder()
+                    .email("user" + i + "@" + "naver.com")
+                    .address(address)
+                    .name(name)
                     .phone(RandomUserGenerater.getRandomPhoneNumber())
                     .password(passwordEncoder.encode("1234"))
                     .joindate(LocalDate.now())
-                    .zipcode(RandomUserGenerater.getRandomZipCode())
                     .username("user" + i)
                     .build();
 

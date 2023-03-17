@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.palad.fakeshop.domain.product.Category;
 import org.palad.fakeshop.domain.product.Product;
-import org.palad.fakeshop.dto.ProductDTO;
+import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,9 +22,6 @@ public class ProductRepositoryTests {
 
     @Autowired
     private ModelMapper modelMapper;
-
-
-
 
     @Test
     @DisplayName("Product Insert Tests")

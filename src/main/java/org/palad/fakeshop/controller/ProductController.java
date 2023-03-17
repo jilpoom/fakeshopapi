@@ -2,7 +2,7 @@ package org.palad.fakeshop.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.palad.fakeshop.dto.ProductDTO;
+import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;

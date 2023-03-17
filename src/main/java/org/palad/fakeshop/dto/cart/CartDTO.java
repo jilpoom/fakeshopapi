@@ -1,4 +1,4 @@
-package org.palad.fakeshop.dto;
+package org.palad.fakeshop.dto.cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -21,17 +22,6 @@ public class CartDTO {
 
     private LocalDate date;
 
-    private Long productid;
-
-    private Long quantity;
-
-    @Builder.Default
-    private Map<String, Long> products = new HashMap<>();
-
-    public void addProducts(Long productid, Long quantity) {
-        products.put("productid", productid);
-        products.put("quantity", quantity);
-    }
-
+    private List<ProductsDTO> products;
 
 }
