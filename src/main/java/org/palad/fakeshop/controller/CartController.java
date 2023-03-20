@@ -30,8 +30,16 @@ public class CartController {
 
     @GetMapping("/user/{uid}")
     public CartDTO getUserCart(@PathVariable String uid) {
-
         return cartService.getUserCart(Long.valueOf(uid));
+    }
 
+    @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.POST})
+    public CartDTO updateProducts(@RequestBody CartDTO cartDTO) {
+        return cartService.addProducts(cartDTO);
+    }
+
+    @DeleteMapping("/{cid}")
+    public CartDTO deleteCart(@PathVariable String cid) {
+        return cartService.deleteCart(Long.valueOf(cid));
     }
 }

@@ -30,9 +30,6 @@ public class CartRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Test
     @DisplayName("cart Insert")
     public void cartInsert() {
@@ -57,16 +54,33 @@ public class CartRepositoryTests {
     @DisplayName("Cart UseCase")
     public void cartUseCase() {
 
+        int day = 1;
+
+        for(int i = 0; i < 100; i++) {
+
+            User user = userRepository.findById(Long.valueOf(i + 1)).orElseThrow();
+
+            Cart cart = Cart.builder()
+                    .date(LocalDate.of(2023, 03, day))
+                    .user(user)
+                    .products(new ArrayList<>())
+                    .build();
+
+
+            day = day % 31 == 0 ? 1 : day + 1;
+
+            cartRepository.save(cart);
+        }
+
+
 
     }
 
     @Test
     @DisplayName("CART SELECT")
-    @Transactional
     public void cartSelect() {
 
         cartRepository.findAll().forEach(cart -> log.info(cart));
-
 
     }
 
@@ -84,6 +98,13 @@ public class CartRepositoryTests {
     public void cartDelete() {
 
         cartRepository.deleteById(1L);
+
+    }
+
+
+    @Test
+    @DisplayName("Cart Update")
+    public void cartUpdate() {
 
     }
 

@@ -80,9 +80,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> getProductsByCategory(String category) {
 
-        String name = Category.getCategoryByValue(category);
-
-        List<Product> list = productRepository.getProductsByCategory(name);
+        List<Product> list = productRepository.getProductsByCategory(category);
 
         List<ProductDTO> dtoList = list.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))

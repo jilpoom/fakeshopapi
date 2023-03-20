@@ -5,17 +5,21 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.palad.fakeshop.domain.product.Product;
 import org.palad.fakeshop.domain.user.User;
+import org.palad.fakeshop.dto.cart.CartDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -32,19 +36,18 @@ public class Cart {
 
     private LocalDate date;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Builder.Default
-    private List<Products> products = new ArrayList<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<Products> products;
 
-    public void addProducts(Products products) {
+    public void addProducts(User user, List<Products> products) {
+        this.products = products;
+        this.user = user;
+    }
 
-        for(int i = 0; i < this.products.size(); i++) {
-            if(this.products.get(i).getProductid() == products.getProductid()) {
-                this.products.remove(i);
-            }
-        }
-
-        this.products.add(products);
+    public void dateFormat(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localdate = LocalDate.parse(date, formatter);
+        this.date = localdate;
     }
 
 

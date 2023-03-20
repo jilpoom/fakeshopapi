@@ -12,4 +12,8 @@ public interface CartService {
     CartDTO getCart(Long cid);
 
     CartDTO getUserCart(Long uid);
+
+    CartDTO addProducts(CartDTO cartDTO);
+
+    CartDTO deleteCart(Long cid);
 }

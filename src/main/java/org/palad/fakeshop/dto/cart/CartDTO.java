@@ -20,8 +20,9 @@ public class CartDTO {
 
     private Long userid;
 
-    private LocalDate date;
+    private String date;
 
     private List<ProductsDTO> products;
+
 
 }

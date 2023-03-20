@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.palad.fakeshop.domain.product.Category;
 import org.palad.fakeshop.domain.product.Product;
+import org.palad.fakeshop.domain.product.Rating;
 import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,10 @@ public class ProductRepositoryTests {
                     .description(category + " description")
                     .image(category + i + ".jpg")
                     .price(i * 1000L)
+                    .rating(Rating.builder()
+                            .rate(0.0)
+                            .count(0L)
+                            .build())
                     .build();
 
             productRepository.save(product);

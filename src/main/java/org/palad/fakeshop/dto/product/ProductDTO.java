@@ -26,21 +26,8 @@ public class ProductDTO {
     @NotBlank
     private String category;
 
-
     private String image;
 
-//    private Map<String, Number> rating;
-//
-//    //TODO : rate, count null 처리
-//
-//
-//    public void setRating(Map<String, Number> rating) {
-//        this.rating = rating;
-//    }
-//
-//    public Map<String, Number> getRating() {
-//        return rating;
-//    }
 
     private RatingDTO rating;
 
