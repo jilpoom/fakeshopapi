@@ -16,6 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class UserDTO {
 
+
     private Long uid;
 
     private String email;
@@ -24,7 +25,7 @@ public class UserDTO {
 
     private String password;
 
-    private LocalDate joindate;
+    private String joindate;
 
     private String phone;
 

@@ -19,7 +19,7 @@ public interface ProductService {
 
     List<ProductDTO> getProductsByCategory(String category);
 
-    void addProduct(ProductDTO productDTO);
+    ProductDTO addProduct(ProductDTO productDTO);
 
     ProductDTO updateProduct(ProductDTO productDTO);
 
