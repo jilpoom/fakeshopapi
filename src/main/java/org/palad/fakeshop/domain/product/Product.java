@@ -4,6 +4,8 @@ package org.palad.fakeshop.domain.product;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.palad.fakeshop.domain.cart.Cart;
 
 import javax.persistence.*;
 
@@ -12,9 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "products")
 @ToString
-@DynamicUpdate
 public class Product {
 
     @Id
@@ -36,6 +36,7 @@ public class Product {
 
     @Embedded
     private Rating rating;
+
 
 
 }

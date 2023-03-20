@@ -3,14 +3,22 @@ package org.palad.fakeshop.repository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.palad.fakeshop.domain.Cart;
+import org.palad.fakeshop.domain.cart.Cart;
+import org.palad.fakeshop.domain.cart.Products;
+import org.palad.fakeshop.domain.product.Product;
 import org.palad.fakeshop.domain.user.User;
 import org.palad.fakeshop.infra.repository.CartRepository;
+import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.infra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @Log4j2
@@ -26,16 +34,44 @@ public class CartRepositoryTests {
     @DisplayName("cart Insert")
     public void cartInsert() {
 
-        User user = userRepository.findById(1L).orElseThrow();
+        User user = userRepository.findById(4L).orElseThrow();
+        // User에 해당하는 Cart 매핑
+
+        List<Products> list = new ArrayList<>();
+
 
         Cart cart = Cart.builder()
                 .date(LocalDate.now())
-                .productid(1L)
-                .quantity(1L)
                 .user(user)
                 .build();
 
-        cartRepository.save(cart);
+
+        Cart userCart = cartRepository.save(cart);
+
+    }
+
+    @Test
+    @DisplayName("Cart UseCase")
+    public void cartUseCase() {
+
+        int day = 1;
+
+        for(int i = 0; i < 100; i++) {
+
+            User user = userRepository.findById(Long.valueOf(i + 1)).orElseThrow();
+
+            Cart cart = Cart.builder()
+                    .date(LocalDate.of(2023, 03, day))
+                    .user(user)
+                    .products(new ArrayList<>())
+                    .build();
+
+
+            day = day % 31 == 0 ? 1 : day + 1;
+
+            cartRepository.save(cart);
+        }
+
 
 
     }
@@ -45,7 +81,6 @@ public class CartRepositoryTests {
     public void cartSelect() {
 
         cartRepository.findAll().forEach(cart -> log.info(cart));
-
 
     }
 
@@ -64,17 +99,14 @@ public class CartRepositoryTests {
 
         cartRepository.deleteById(1L);
 
+    }
+
+
+    @Test
+    @DisplayName("Cart Update")
+    public void cartUpdate() {
 
     }
 
-//    @Test
-//    @DisplayName("CARTS BY USERID")
-//    public void cartsByUserID(){
-//
-//        List<Cart> carts = cartRepository.getCartsByUserid(1L);
-//
-//        carts.forEach(cart -> log.info(cart));
-//
-//    }
 
 }

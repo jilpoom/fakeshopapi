@@ -2,7 +2,7 @@ package org.palad.fakeshop.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.palad.fakeshop.dto.ProductDTO;
+import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
@@ -23,15 +23,15 @@ public class ProductController {
     public List<ProductDTO> getProducts(@RequestParam(required = false) String limit,
                                         @RequestParam(required = false) String sort) {
 
-        if(limit != null) {
+        if (limit != null) {
 
             return productService.getProductsWithLimit(Integer.parseInt(limit));
         }
 
-        if(sort != null) {
+        if (sort != null) {
             Sort sorts = Sort.by("pid").descending();
 
-            if(sort.equals("desc")) return productService.getProductsWithSort(sorts);
+            if (sort.equals("desc")) return productService.getProductsWithSort(sorts);
         }
 
         return productService.getList();
@@ -40,7 +40,7 @@ public class ProductController {
     @GetMapping("/{pid}")
     public ProductDTO getProduct(@PathVariable String pid) {
 
-        if(pid.matches("[A-Za-z](.*)")) {
+        if (pid.matches("[A-Za-z](.*)")) {
             throw new NumberFormatException("unvalid variable");
         }
 
@@ -63,7 +63,7 @@ public class ProductController {
 
         log.info(productDTO);
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
 
         }
 

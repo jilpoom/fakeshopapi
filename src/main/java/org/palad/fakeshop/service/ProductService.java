@@ -1,7 +1,6 @@
 package org.palad.fakeshop.service;
 
-import org.palad.fakeshop.dto.ProductDTO;
-import org.springframework.data.domain.Pageable;
+import org.palad.fakeshop.dto.product.ProductDTO;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
