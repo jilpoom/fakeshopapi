@@ -67,9 +67,7 @@ public class ProductController {
 
         }
 
-        productService.addProduct(productDTO);
-
-        return productDTO;
+        return productService.addProduct(productDTO);
     }
 
     @PutMapping()

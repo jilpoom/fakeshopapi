@@ -10,6 +10,7 @@ import org.palad.fakeshop.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> getList() {
@@ -68,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO addUser(UserDTO userDTO) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
         User addedUser = userRepository.save(user);
         UserDTO dto = modelMapper.map(addedUser, UserDTO.class);
@@ -79,6 +83,7 @@ public class UserServiceImpl implements UserService {
         if(userDTO.getUid() == null) {
             throw new RuntimeException("올바른 사용자가 아닙니다.");
         }
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
         User addedUser = userRepository.save(user);
         UserDTO dto = modelMapper.map(addedUser, UserDTO.class);

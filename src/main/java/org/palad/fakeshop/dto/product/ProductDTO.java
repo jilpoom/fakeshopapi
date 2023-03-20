@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Data
 @Builder
@@ -18,7 +20,7 @@ public class ProductDTO {
     @NotBlank
     private String title;
 
-    @NotBlank
+    @NotNull
     private Long price;
 
     private String description;
@@ -27,7 +29,6 @@ public class ProductDTO {
     private String category;
 
     private String image;
-
 
     private RatingDTO rating;
 

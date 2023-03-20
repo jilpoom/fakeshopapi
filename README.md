@@ -1,4 +1,4 @@
-# FAKE Store API
+# FAKE Store API With Spring Boot
 
 <a href="https://fakestoreapi.com/">FakeStoreAPI</a>
 
@@ -14,47 +14,43 @@
 - JWT (적용 예정)
 - Swagger-UI
 
-
 # 📌 DB 설계
 
-![image](https://user-images.githubusercontent.com/64225078/224736049-21d91c8b-dd97-4232-b303-6ddffafcb946.png)
-
-
+![img.png](img.png)
 
 # 📌 자원 식별(URI 정의)
 
-
-## 상품 전체 조회 
+## 상품 전체 조회
 
 ### GET /Products
 
 ```json
 [
-{
-"pid":1,
-"title":"shirt",
-"price":10000,
-"description":"man's clothing description",
-"category":"MAN_CLOTHING",
-"image":"shirt.jpg",
-"rating":{
-"rate":3.2,
-"count":100
-}
-},
-{
-"pid":2,
-"title":"MAN_CLOTHING0",
-"price":0,
-"description":"MAN_CLOTHINGdescription",
-"category":"MAN_CLOTHING",
-"image":"MAN_CLOTHING0.jpg",
-"rating":{
-"rate":0.0,
-"count":0
-}
-},
-....
+  {
+    "pid": 1,
+    "title": "mansclothing0",
+    "price": 0,
+    "description": "mansclothing description",
+    "category": "mansclothing",
+    "image": "mansclothing0.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  {
+    "pid": 2,
+    "title": "womansclothing1",
+    "price": 1000,
+    "description": "womansclothing description",
+    "category": "womansclothing",
+    "image": "womansclothing1.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  ...
 
 ```
 
@@ -64,16 +60,16 @@
 
 ```json
 {
-"pid":1,
-"title":"shirt",
-"price":10000,
-"description":"man's clothing description",
-"category":"MAN_CLOTHING",
-"image":"shirt.jpg",
-"rating":{
-"rate":3.2,
-"count":100
-}
+  "pid": 1,
+  "title": "mansclothing0",
+  "price": 0,
+  "description": "mansclothing description",
+  "category": "mansclothing",
+  "image": "mansclothing0.jpg",
+  "rating": {
+    "rate": 0.0,
+    "count": 0
+  }
 }
 ```
 
@@ -83,76 +79,65 @@
 
 ```json
 [
-{
-"pid":1,
-"title":"shirt",
-"price":10000,
-"description":"man's clothing description",
-"category":"MAN_CLOTHING",
-"image":"shirt.jpg",
-"rating":{
-"rate":3.2,
-"count":100
-}
-},
-{
-"pid":2,
-"title":"MAN_CLOTHING0",
-"price":0,
-"description":"MAN_CLOTHINGdescription",
-"category":"MAN_CLOTHING",
-"image":"MAN_CLOTHING0.jpg",
-"rating":{
-"rate":0.0,
-"count":0
-}
-},
-{
-"pid":3,
-"title":"WOMAN_CLOTHING1",
-"price":1000,
-"description":"WOMAN_CLOTHINGdescription",
-"category":"WOMAN_CLOTHING",
-"image":"WOMAN_CLOTHING1.jpg",
-"rating":{
-"rate":1.0,
-"count":1
-}
-}
+  {
+    "pid": 1,
+    "title": "mansclothing0",
+    "price": 0,
+    "description": "mansclothing description",
+    "category": "mansclothing",
+    "image": "mansclothing0.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  {
+    "pid": 2,
+    "title": "womansclothing1",
+    "price": 1000,
+    "description": "womansclothing description",
+    "category": "womansclothing",
+    "image": "womansclothing1.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  {
+    "pid": 3,
+    "title": "backpack2",
+    "price": 2000,
+    "description": "backpack description",
+    "category": "backpack",
+    "image": "backpack2.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  }
 ]
 ```
 
-## 상품 정렬 후 조회
+## 상품 내림차순 정렬 조회
 
 ### GET /products?sort=desc
 
 ```json
 [
-{
-"pid":101,
-"title":"CAP99",
-"price":99000,
-"description":"CAPdescription",
-"category":"CAP",
-"image":"CAP99.jpg",
-"rating":{
-"rate":9.0,
-"count":99
-}
-},
-{
-"pid":100,
-"title":"BACKPACK98",
-"price":98000,
-"description":"BACKPACKdescription",
-"category":"BACKPACK",
-"image":"BACKPACK98.jpg",
-"rating":{
-"rate":8.0,
-"count":98
-}
-},
-....
+  {
+    "pid": 100,
+    "title": "etc99",
+    "price": 99000,
+    "description": "etc description",
+    "category": "etc",
+    "image": "etc99.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  ...
+]
 ```
 
 ## 카테고리 조회
@@ -160,7 +145,13 @@
 ### GET /products/categories
 
 ```json
-["mansclothing","womansclothing","backpack","cap"]
+[
+  "mansclothing",
+  "womansclothing",
+  "backpack",
+  "cap",
+  "etc"
+]
 ```
 
 ## 카테고리별 품목 조회
@@ -169,64 +160,60 @@
 
 ```json
 [
-{
-"pid":1,
-"title":"shirt",
-"price":10000,
-"description":"man's clothing description",
-"category":"MAN_CLOTHING",
-"image":"shirt.jpg",
-"rating":{
-"rate":3.2,
-"count":100
-}
-},
-{
-"pid":2,
-"title":"MAN_CLOTHING0",
-"price":0,
-"description":"MAN_CLOTHINGdescription",
-"category":"MAN_CLOTHING",
-"image":"MAN_CLOTHING0.jpg",
-"rating":{
-"rate":0.0,
-"count":0
-}
-},
-
-...
+  {
+    "pid": 1,
+    "title": "mansclothing0",
+    "price": 0,
+    "description": "mansclothing description",
+    "category": "mansclothing",
+    "image": "mansclothing0.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  {
+    "pid": 6,
+    "title": "mansclothing5",
+    "price": 5000,
+    "description": "mansclothing description",
+    "category": "mansclothing",
+    "image": "mansclothing5.jpg",
+    "rating": {
+      "rate": 0.0,
+      "count": 0
+    }
+  },
+  ...
 ```
 
 ## 품목 입력
 
 ### POST /products
 
-RequestBody
+- RequestBody
 
 ```json
 {
   "category": "mansclothing",
-  "description": "mansclothing update description",
+  "description": "mansclothing description",
   "image": "mansclothing.jpg",
-  "price": 10000,
-  "title": "mansclothing update"
+  "price": 2000,
+  "title": "new mansclothing"
 }
 ```
 
-ResponseBody
+- ResponseBody
 
 ```json
 {
-  "pid": null,
-  "title": "mansclothing update",
-  "price": 10000,
-  "description": "mansclothing update description",
+  "pid": 102,
+  "title": "new mansclothing",
+  "price": 2000,
+  "description": "mansclothing description",
   "category": "mansclothing",
   "image": "mansclothing.jpg",
-  "rating": {
-    "rate": null,
-    "count": null
-  }
+  "rating": null
 }
 ```
 
@@ -234,28 +221,36 @@ ResponseBody
 
 ### PUT /products
 
-```json
-{
-  "pid" : 3,
-  "category": "mansclothing",
-  "description": "mansclothing update description",
-  "image": "mansclothing.jpg",
-  "price": 10000,
-  "title": "mansclothing update"
-}
-```
+- RequestBody
 
 ```json
 {
-  "pid": 3,
-  "title": "mansclothing update",
-  "price": 10000,
-  "description": "mansclothing update description",
+  "pid": 102,
+  "title": "new mansclothing",
+  "price": 2000,
+  "description": "mansclothing description",
   "category": "mansclothing",
   "image": "mansclothing.jpg",
   "rating": {
-    "rate": null,
-    "count": null
+    "rate": 5.0,
+    "count": 1
+  }
+}
+```
+
+- ResponseBody
+
+```json
+{
+  "pid": 102,
+  "title": "new mansclothing",
+  "price": 2000,
+  "description": "mansclothing description",
+  "category": "mansclothing",
+  "image": "mansclothing.jpg",
+  "rating": {
+    "rate": 5,
+    "count": 1
   }
 }
 ```
@@ -266,15 +261,15 @@ ResponseBody
 
 ```json
 {
-  "pid": 100,
-  "title": "BACKPACK98",
-  "price": 98000,
-  "description": "BACKPACKdescription",
-  "category": null,
-  "image": "BACKPACK98.jpg",
+  "pid": 2,
+  "title": "womansclothing1",
+  "price": 1000,
+  "description": "womansclothing description",
+  "category": "womansclothing",
+  "image": "womansclothing1.jpg",
   "rating": {
-    "rate": 8,
-    "count": 98
+    "rate": 0,
+    "count": 0
   }
 }
 ```
@@ -285,62 +280,54 @@ ResponseBody
 
 ### GET /users
 
-ResponseBody
+- ResponseBody
 
 ```json
 [
   {
-    "uid": 2,
-    "email": "user1@naver.com",
-    "username": "user1",
-    "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
-    "joindate": [
-      2023,
-      3,
-      13
-    ],
-    "phone": "010-4450-9299",
+    "uid": 1,
+    "email": "user0@naver.com",
+    "username": "user0",
+    "password": "$2a$10$rxgx/YPSfoRVYFMl3Y69K.n6ioJtQc/LJJhXeZJYZf0lJ33qcF/BK",
+    "joindate": "2023-03-18",
+    "phone": "010-2904-0311",
     "name": {
-      "firstname": "편",
-      "lastname": "도월"
+      "firstname": "용",
+      "lastname": "춘나"
     },
     "address": {
-      "zipcode": "30703",
-      "address": "인천광역시",
-      "latitude": 0.15274496147532424,
-      "longitude": 0.6167202568436756
+      "city": "대구광역시",
+      "zipcode": "79944",
+      "longitude": 0.2356067923714087,
+      "latitude": 0.9567497751650677
     }
   },
-...
+  ...
 ```
 
 ## 개별 회원 조회
 
 ### GET /users/{uid}
 
-ResponseBody
+- ResponseBody
 
 ```json
 {
-  "uid": 2,
-  "email": "user1@naver.com",
-  "username": "user1",
-  "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
-  "joindate": [
-    2023,
-    3,
-    13
-  ],
-  "phone": "010-4450-9299",
+  "uid": 1,
+  "email": "user0@naver.com",
+  "username": "user0",
+  "password": "$2a$10$rxgx/YPSfoRVYFMl3Y69K.n6ioJtQc/LJJhXeZJYZf0lJ33qcF/BK",
+  "joindate": "2023-03-18",
+  "phone": "010-2904-0311",
   "name": {
-    "firstname": "편",
-    "lastname": "도월"
+    "firstname": "용",
+    "lastname": "춘나"
   },
   "address": {
-    "zipcode": "30703",
-    "address": "인천광역시",
-    "latitude": 0.15274496147532424,
-    "longitude": 0.6167202568436756
+    "city": "대구광역시",
+    "zipcode": "79944",
+    "longitude": 0.2356067923714087,
+    "latitude": 0.9567497751650677
   }
 }
 ```
@@ -349,118 +336,172 @@ ResponseBody
 
 ### GET /users?limit={number}
 
-ResponseBody
+- ResponseBody
 
 ```json
 [
   {
+    "uid": 1,
+    "email": "user0@naver.com",
+    "username": "user0",
+    "password": "$2a$10$rxgx/YPSfoRVYFMl3Y69K.n6ioJtQc/LJJhXeZJYZf0lJ33qcF/BK",
+    "joindate": "2023-03-18",
+    "phone": "010-2904-0311",
+    ...
+  },
+  {
     "uid": 2,
     "email": "user1@naver.com",
     "username": "user1",
-    "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
-    "joindate": [
-      2023,
-      3,
-      13
-    ],
-    "phone": "010-4450-9299",
-    "name": {
-      "firstname": "편",
-      "lastname": "도월"
-    },
-    "address": {
-      "zipcode": "30703",
-      "address": "인천광역시",
-      "latitude": 0.15274496147532424,
-      "longitude": 0.6167202568436756
-    }
-  },
-  {
-    "uid": 3,
-    "email": "user2@naver.com",
-    "username": "user2",
-    "password": "$2a$10$tXXejpGE2f8t48930mKKoeyYFcEPdWIC0b2Y2.NtBpYsUMTBA5/96",
-    "joindate": [
-      2023,
-      3,
-      13
-    ],
-    "phone": "010-5623-0312",
-    "name": {
-      "firstname": "금",
-      "lastname": "린오"
-    },
-    "address": {
-      "zipcode": "11965",
-      "address": "울산광역시",
-      "latitude": 0.615849859140715,
-      "longitude": 0.9337544027188417
-    }
+    "password": "$2a$10$kSC6UGHYW3eBsdXSeSJflO6Gr3/OHog.DOqzuImMmNp/KaYa77jTu",
+    "joindate": "2023-03-18",
+    "phone": "010-4017-9560",
+    ...
   }
+]
 
-...
 ```
 
 ## 회원 정렬 후 조회
 
 ### GET /users?sort=desc
 
-ResponseBody
+- ResponseBody
 
 ```json
 [
   {
-    "uid": 102,
-    "email": "123@123.com",
-    "username": "username00",
-    "password": "1234",
-    "joindate": [
-      2023,
-      3,
-      13
-    ],
-    "phone": "010-0000-0000",
+    "uid": 200,
+    "email": "user99@naver.com",
+    "username": "user99",
+    "password": "$2a$10$Y/WBOk.UmFixDto9H6nbHO.KBIng7biN82u7fVl1YkqHNYen81gSW",
+    "joindate": "2023-03-18",
+    "phone": "010-9003-9791",
     "name": {
-      "firstname": null,
-      "lastname": null
+      "firstname": "편",
+      "lastname": "박울"
     },
     "address": {
-      "zipcode": null,
-      "address": null,
-      "latitude": null,
-      "longitude": null
+      "city": "광주광역시",
+      "zipcode": "93042",
+      "longitude": 0.3883513991620904,
+      "latitude": 0.2876636584205424
     }
   },
   {
-    "uid": 101,
-    "email": "user0@naver.com",
-    "username": "user0",
-    "password": "$2a$10$I50jBgMF6.4mpI6OEYaiN.F0oWRjnJXZNKGrBpZpnSz9vzoN.IIfG",
-    "joindate": [
-      2023,
-      3,
-      13
-    ],
-    "phone": "010-1069-0170",
-    "name": {
-      "firstname": "홍",
-      "lastname": "령혼"
-    },
-    "address": {
-      "zipcode": "81947",
-      "address": "광주광역시",
-      "latitude": 0.841411071415164,
-      "longitude": 0.6525690452565338
-    }
+    "uid": 199,
+    "email": "user98@naver.com",
+    "username": "user98",
+    "password": "$2a$10$AUImB.IdJdjX3FPCFl74K.V5jCJywT0zB5JhrA0ysFxT8F003dQgC",
+    "joindate": "2023-03-18",
+    "phone": "010-8351-4215",
+    ...
   },
   ...
 ```
 
-## 회원 등록 (수정중)
+## 회원 등록
 
 ### POST /users
 
+- RequestBody
+
 ```json
+{
+  "address": {
+    "city": "인천광역시",
+    "latitude": 0.345,
+    "longitude": 3.241,
+    "zipcode": "34536"
+  },
+  "email": "newUser@naver.com",
+  "joindate": "2023-03-20",
+  "name": {
+    "firstname": "강",
+    "lastname": "동원"
+  },
+  "password": <PASSWORD>,
+  "phone": "010-0000-0000",
+  "username": "user1011"
+}
+
+```
+
+- ResponseBody
+
+```json
+
+{
+  "uid": 202,
+  "email": "newUser@naver.com",
+  "username": "user1011",
+  "password": "$2a$10$Jf8V0kEEw3pkVVblbaAOFeL3rY2oMKM4o2sMSXgO6sVPTHhNd722O",
+  "joindate": "2023-03-20",
+  "phone": "010-0000-0000",
+  "name": {
+    "firstname": "강",
+    "lastname": "동원"
+  },
+  "address": {
+    "city": "인천광역시",
+    "zipcode": "34536",
+    "longitude": 3.241,
+    "latitude": 0.345
+  }
+}
+
+
+```
+
+## 회원 정보 수정
+
+### PUT /users
+
+- RequestBody
+
+```json
+{
+  "uid": 202,
+  "email": "updateUser@naver.com",
+  "username": "user1011",
+  "password": <PASSWORD>,
+  "joindate": "2023-03-20",
+  "phone": "010-0000-0000",
+  "name": {
+    "firstname": "강",
+    "lastname": "동원"
+  },
+  "address": {
+    "city": "인천광역시",
+    "zipcode": "34536",
+    "longitude": 3.241,
+    "latitude": 0.345
+  }
+}
+```
+
+- ResponseBody
+
+```json
+
+{
+  "uid": 202,
+  "email": "updateUser@naver.com",
+  "username": "user1011",
+  "password": "$2a$10$hLwDEeByBviryRqdERm6uObdm8JJUODThLly23TZoXx67ZZtdp6L6",
+  "joindate": "2023-03-20",
+  "phone": "010-0000-0000",
+  "name": {
+    "firstname": "강",
+    "lastname": "동원"
+  },
+  "address": {
+    "city": "인천광역시",
+    "zipcode": "34536",
+    "longitude": 3.241,
+    "latitude": 0.345
+  }
+}
 
 ```
 
@@ -468,32 +509,188 @@ ResponseBody
 
 ### DELETE /users/{uid}
 
-ResponseBody
+- ResponseBody
 
 ```json
 {
-  "uid": 2,
-  "email": "user1@naver.com",
-  "username": "user1",
-  "password": "$2a$10$4smbkzsHB3FpAOmJzERebuSAuBn3ebWTrLjKYFRcxbOMEW8WR6Kcu",
-  "joindate": [
-    2023,
-    3,
-    13
-  ],
-  "phone": "010-4450-9299",
+  "uid": 1,
+  "email": "user0@naver.com",
+  "username": "user0",
+  "password": "$2a$10$rxgx/YPSfoRVYFMl3Y69K.n6ioJtQc/LJJhXeZJYZf0lJ33qcF/BK",
+  "joindate": "2023-03-18",
+  "phone": "010-2904-0311",
   "name": {
-    "firstname": "편",
-    "lastname": "도월"
+    "firstname": "용",
+    "lastname": "춘나"
   },
   "address": {
-    "zipcode": "30703",
-    "address": "인천광역시",
-    "latitude": 0.15274496147532424,
-    "longitude": 0.6167202568436756
+    "city": "대구광역시",
+    "zipcode": "79944",
+    "longitude": 0.2356067923714087,
+    "latitude": 0.9567497751650677
   }
+}
+
+```
+
+# 📌 Cart
+
+## 장바구니 전체 조회
+
+### GET /carts
+
+- ResponseBody
+
+```json
+[
+  {
+    "cid": 3,
+    "userid": 3,
+    "date": "2023-03-03",
+    "products": [
+      {
+        "productid": 3,
+        "quantity": 4
+      }
+    ]
+  },
+  {
+    "cid": 4,
+    "userid": 4,
+    "date": "2023-03-04",
+    "products": []
+  },
+  ...
+```
+
+## 장바구니 개별 조회
+
+### GET /carts/{cid}
+
+- ResponseBody
+
+```json
+
+{
+  "cid": 3,
+  "userid": 3,
+  "date": "2023-03-03",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 4
+    }
+  ]
+}
+
+```
+
+## 유저별 장바구니 조회
+
+### GET /carts/user/{uid}
+
+- ResponseBody
+
+```json
+
+{
+  "cid": 3,
+  "userid": 3,
+  "date": "2023-03-03",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 4
+    }
+  ]
+}
+
+```
+
+## 장바구니에 제품 추가
+
+### POST /carts
+
+- RequestBody
+
+```json
+{
+  "cid": 3,
+  "date": "2022-03-20",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 5
+    },
+    {
+      "productid": 4,
+      "quantity": 2
+    }
+  ],
+  "userid": 3
 }
 ```
 
+- ResponseBody
 
-...진행중(22.3.14)
+```json
+{
+  "cid": 3,
+  "userid": 3,
+  "date": "2023-03-03",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 5
+    },
+    {
+      "productid": 4,
+      "quantity": 2
+    }
+  ]
+}
+```
+
+## 장바구니 제품 수량 변경
+
+- 필수 파라미터
+    - 해당 장바구니를 소유한 userId
+    - 변경할 productId와 수량
+
+### PUT or PATCH /users
+
+- RequestBody
+
+```json
+{
+  "userid": 3,
+  "date": "2023-03-03",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 3
+    }
+  ]
+}
+```
+
+- ResponseBody
+
+```json
+
+{
+  "cid": 3,
+  "userid": 3,
+  "date": "2023-03-03",
+  "products": [
+    {
+      "productid": 3,
+      "quantity": 3
+    },
+    {
+      "productid": 4,
+      "quantity": 2
+    }
+  ]
+}
+```
