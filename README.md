@@ -9,7 +9,7 @@
 
 - Spring Boot
 - Spring Data JPA
-- MariaDB
+- MySQL
 - Spring Security (적용 예정)
 - JWT (적용 예정)
 - Swagger-UI
