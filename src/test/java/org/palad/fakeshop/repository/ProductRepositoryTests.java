@@ -32,7 +32,7 @@ public class ProductRepositoryTests {
                 .category(Category.MAN_CLOTHING.name())
                 .description("man's clothing description")
                 .title("shirt")
-                .image("shirt.jpg")
+//                .image("shirt.jpg")
                 .price(10000L)
                 .build();
 
@@ -64,7 +64,7 @@ public class ProductRepositoryTests {
                     .title(category + i)
                     .category(category)
                     .description(category + " description")
-                    .image(category + i + ".jpg")
+//                    .image(category + i + ".jpg")
                     .price(i * 1000L)
                     .rating(Rating.builder()
                             .rate(0.0)

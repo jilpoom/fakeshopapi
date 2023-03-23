@@ -3,9 +3,6 @@ package org.palad.fakeshop.domain.product;
 
 import com.sun.istack.NotNull;
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.palad.fakeshop.domain.cart.Cart;
 
 import javax.persistence.*;
 
@@ -31,6 +28,7 @@ public class Product {
 
     @NotNull
     private String category;
+
 
     private String image;
 

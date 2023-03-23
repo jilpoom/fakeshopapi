@@ -13,12 +13,9 @@ import org.palad.fakeshop.infra.repository.UserRepository;
 import org.palad.fakeshop.util.RandomUserGenerater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Random;
 
 @SpringBootTest
@@ -120,4 +117,11 @@ public class UserRepositoryTests {
 
 
     }
+
+    @Test
+    @DisplayName("Set Role")
+    public void setRoleTest() {
+
+    }
+
 }

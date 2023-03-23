@@ -1,7 +1,7 @@
 spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-spring.datasource.url=jdbc:mariadb://localhost:3306/fakeshop
-spring.datasource.username=fakeshopuser
-spring.datasource.password=fakeshopuser
+spring.datasource.url=jdbc:mariadb://localhost:3306/<dbname>
+spring.datasource.username=<username>
+spring.datasource.password=<password>
 
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
@@ -20,5 +20,5 @@ spring.servlet.multipart.max-request-size=30MB
 fakeshop.upload.path=C:/uploadimage
 
 # jwt key
-jwt.secretKey : 1234567812345678123456781234567812345678124143
-jwt.refreshKey : 12345678123456781234567812345678123456781214342
+jwt.secretKey : <secretKey>
+jwt.refreshKey : <secretKey>
