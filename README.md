@@ -9,9 +9,9 @@
 
 - Spring Boot
 - Spring Data JPA
-- MySQL
-- Spring Security (적용 예정)
-- JWT (적용 예정)
+- MariaDB
+- Spring Security
+- JWT
 - Swagger-UI
 
 # 📌 DB 설계
@@ -693,4 +693,28 @@
     }
   ]
 }
+```
+
+# Login
+
+- RequestBody
+
+```json
+{
+"username" : "user1",
+"password" : "<PASSWORD>"
+}
+
+```
+
+
+- ResponseBody
+
+```json
+{
+"refreshToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjc5NTg0MjgzLCJleHAiOjE2Nzk1ODYwODN9.d6uTE14CBXqZ6_x7x7_hGevGP0PFnX27IjpoAN4b5OA",
+"accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWF0IjoxNjc5NTg0MjgzLCJleHAiOjE2Nzk1ODQ4ODN9.IWPtPjXd_oSzGuuqlXDbau3k9wMvC33q_ZTmVYw2Rd0"
+}
+
+
 ```

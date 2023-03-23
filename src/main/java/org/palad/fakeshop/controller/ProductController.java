@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,6 +20,10 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    @Value("${fakeshop.upload.path}")
+    private String uploadPath;
+
 
     @GetMapping()
     public List<ProductDTO> getProducts(@RequestParam(required = false) String limit,
@@ -58,10 +64,9 @@ public class ProductController {
         return productService.getProductsByCategory(category);
     }
 
-    @PostMapping()
-    public ProductDTO addProduct(@Valid @RequestBody ProductDTO productDTO, BindingResult bindingResult) {
-
-        log.info(productDTO);
+    @PostMapping
+    public ProductDTO addProduct(@Valid @RequestBody ProductDTO productDTO,
+                                 BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
 
@@ -69,6 +74,8 @@ public class ProductController {
 
         return productService.addProduct(productDTO);
     }
+
+
 
     @PutMapping()
     public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) {

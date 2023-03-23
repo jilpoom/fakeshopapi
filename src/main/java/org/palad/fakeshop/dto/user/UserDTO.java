@@ -1,19 +1,17 @@
 package org.palad.fakeshop.dto.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
 
 
@@ -24,6 +22,7 @@ public class UserDTO {
     private String username;
 
     private String password;
+    private Collection<GrantedAuthority> authorities;
 
     private String joindate;
 
@@ -32,5 +31,6 @@ public class UserDTO {
     private NameDTO name;
 
     private AddressDTO address;
+
 
 }
