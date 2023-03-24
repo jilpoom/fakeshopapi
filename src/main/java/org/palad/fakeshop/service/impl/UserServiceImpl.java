@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(Long uid) {
-        User user = userRepository.findById(uid).orElseThrow();
+        User user = userRepository.findById(uid).orElseThrow(() -> new RuntimeException("User not found : " + uid));
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return userDTO;
     }
@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO addUser(UserDTO userDTO) {
+
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
         User addedUser = userRepository.save(user);
@@ -81,8 +82,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO updateUser(UserDTO userDTO) {
         if(userDTO.getUid() == null) {
-            throw new RuntimeException("올바른 사용자가 아닙니다.");
+            throw new RuntimeException("uid 필드가 반드시 필요합니다. : ");
         }
+
+        User user1 = userRepository.findById(userDTO.getUid()).orElseThrow(
+                () -> new RuntimeException("User not found : " + userDTO.getUid()));
+
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
         User addedUser = userRepository.save(user);
