@@ -1,6 +1,5 @@
 package org.palad.fakeshop.repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,9 +12,13 @@ import org.palad.fakeshop.infra.repository.UserRepository;
 import org.palad.fakeshop.util.RandomUserGenerater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
@@ -31,8 +34,22 @@ public class UserRepositoryTests {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Test
+    @DisplayName("User 테이블 페이징")
+    public void pagingTest() {
+        int page = 0;
+        int size = 10;
+
+        Sort sort = Sort.by("uid").ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        List<User> userGroup = userRepository.findAll(pageable).getContent();
+
+        userGroup.forEach(user -> log.info(user));
+
+    }
+
 
     @Test
     @DisplayName("User 테이블에 데이터 입력")

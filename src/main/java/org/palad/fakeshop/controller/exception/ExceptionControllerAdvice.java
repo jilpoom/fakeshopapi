@@ -1,4 +1,4 @@
-package org.palad.fakeshop.controller;
+package org.palad.fakeshop.controller.exception;
 
 import lombok.extern.log4j.Log4j2;
 import org.palad.fakeshop.dto.exception.ErrorDTO;
@@ -15,8 +15,8 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public ErrorDTO illegalHandle(IllegalArgumentException e) {
-        log.error( "[IllegalArgumentException] " + e.getMessage());
-        return new ErrorDTO("BAD", e.getMessage());
+        log.error("[IllegalArgumentException] " + e.getMessage());
+        return new ErrorDTO("BAD_REQUEST", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -32,5 +32,13 @@ public class ExceptionControllerAdvice {
         log.error("HttpMessageNotReadableException" + e.getMessage());
         return new ErrorDTO("BAD_REQUEST", e.getMessage());
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ErrorDTO UserNotFoundException(UserNotFoundException e) {
+        log.error("UserNotFoundException" + e.getMessage());
+        return new ErrorDTO("NOT_FOUND", e.getMessage());
+    }
+
 
 }

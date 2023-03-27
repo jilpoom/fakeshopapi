@@ -43,7 +43,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         log.info("Authentication name : " + name);
         claim.put("username", name);
 
-        //Access Token 유효 기간 1분
+        //Access Token 유효 기간 10분
         String accessToken = jwtTokenProvider.createToken(claim, 10);
 
         //Refresh Token 유효 기간 30분
