@@ -13,8 +13,12 @@ import org.palad.fakeshop.infra.repository.CartRepository;
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.infra.repository.ProductsRepository;
 import org.palad.fakeshop.service.CartService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +42,43 @@ public class CartServiceImpl implements CartService {
                 .collect(Collectors.toList());
 
         return dtoList;
+    }
+
+    @Override
+    public List<CartDTO> getCartsWithLimitAndSort(String limit, String sort) {
+
+        int size = Long.valueOf(cartRepository.count()).intValue();
+        Sort orders = null;
+
+        if(sort != null) {
+            if (!(sort.equals("asc") || sort.equals("desc"))) {
+                throw new IllegalArgumentException("sort의 값은 'desc', 'asc' 외엔 입력할 수 없습니다.");
+            } else {
+                if(sort.equals("desc")) {
+                    orders = Sort.by("cid").descending();
+                } else {
+                    orders = Sort.by("cid").ascending();
+                }
+            }
+        }
+
+        if(limit != null) {
+            if (!limit.matches("\\d+")) {
+                throw new IllegalArgumentException("limit의 값은 숫자만 입력해주세요");
+            } else {
+                size = Integer.parseInt(limit);
+            }
+        }
+
+        Pageable pageable = PageRequest.of(0, size, orders);
+
+        List<Cart> cartGroup = cartRepository.findAll(pageable).toList();
+
+        List<CartDTO> cartDTOGroup = cartGroup.stream()
+                .map(cart -> modelMapper.map(cart, CartDTO.class))
+                .collect(Collectors.toList());
+
+        return cartDTOGroup;
     }
 
     @Override
@@ -112,5 +153,22 @@ public class CartServiceImpl implements CartService {
         CartDTO dto = modelMapper.map(cartRepository.findById(cid).orElseThrow(), CartDTO.class);
         cartRepository.deleteById(cid);
         return dto;
+    }
+
+    @Override
+    public List<CartDTO> getCartsByDate(String startDate, String endDate) {
+        List<Cart> cartGroup = cartRepository.findByDateBetween(StringToDate(startDate), StringToDate(endDate))
+                .orElseThrow(() -> new IllegalArgumentException("날짜 형식이 정확하지 않습니다."));
+
+        List<CartDTO> cartDTOGroup = cartGroup.stream()
+                .map(cart -> modelMapper.map(cart, CartDTO.class))
+                .collect(Collectors.toList());
+
+        return cartDTOGroup;
+    }
+
+    private LocalDate StringToDate(String date) {
+        String[] dateParts = date.split("-");
+        return LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
     }
 }

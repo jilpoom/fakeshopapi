@@ -32,13 +32,11 @@ public class ProductController {
         if(limit != null || !sort.equals("asc")) {
             return productService.getProductsWithLimitAndSort(limit, sort);
         }
-
         return productService.getList();
     }
 
     @GetMapping("/{pid}")
     public ProductDTO getProduct(@PathVariable String pid) {
-
         return productService.getProductById(pid);
     }
 

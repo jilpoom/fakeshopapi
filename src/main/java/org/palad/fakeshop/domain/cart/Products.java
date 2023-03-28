@@ -1,12 +1,10 @@
 package org.palad.fakeshop.domain.cart;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.palad.fakeshop.domain.product.Product;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
@@ -21,8 +19,10 @@ public class Products {
     private Long psid;
 
     @OneToOne
+    @NotNull(message = "제품 아이디를 반드시 입력해야 합니다 : productid")
     private Product productid;
 
+    @NotNull(message = "제품의 개수를 반드시 입력해야 합니다 : quantity"  )
     private Long quantity;
 
     @ManyToOne

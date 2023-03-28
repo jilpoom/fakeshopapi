@@ -1,9 +1,10 @@
-{
-  "pid": 1,
-  "title": "mansclothing0",
-  "price": 0,
-  "description": "mansclothing description",
-  "category": "mansclothing",
-  "image": "mansclothing0.jpg",
-  "rating": null
-}
+[
+  {
+    "code": "NotNull",
+    "message": "타이틀을 입력해주세요"
+  },
+  {
+    "code": "NotNull",
+    "message": "가격을 입력해주세요"
+  }
+]

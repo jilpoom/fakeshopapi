@@ -16,4 +16,8 @@ public interface CartService {
     CartDTO addProducts(CartDTO cartDTO);
 
     CartDTO deleteCart(Long cid);
+
+    List<CartDTO> getCartsWithLimitAndSort(String limit, String sort);
+
+    List<CartDTO> getCartsByDate(String startDate, String endDate);
 }
