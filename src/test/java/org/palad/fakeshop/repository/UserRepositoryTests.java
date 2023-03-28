@@ -51,6 +51,9 @@ public class UserRepositoryTests {
     }
 
 
+
+
+
     @Test
     @DisplayName("User 테이블에 데이터 입력")
     public void insertTest() {

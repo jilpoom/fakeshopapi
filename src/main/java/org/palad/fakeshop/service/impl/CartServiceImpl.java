@@ -3,7 +3,7 @@ package org.palad.fakeshop.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
+import org.palad.fakeshop.controller.exception.NotFoundException;
 import org.palad.fakeshop.domain.cart.Cart;
 import org.palad.fakeshop.domain.cart.Products;
 import org.palad.fakeshop.domain.product.Product;
@@ -12,10 +12,8 @@ import org.palad.fakeshop.dto.cart.ProductsDTO;
 import org.palad.fakeshop.infra.repository.CartRepository;
 import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.infra.repository.ProductsRepository;
-import org.palad.fakeshop.infra.repository.UserRepository;
 import org.palad.fakeshop.service.CartService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +42,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartDTO getCart(Long cid) {
-        Cart cart = cartRepository.findById(cid).orElseThrow();
+        Cart cart = cartRepository.findById(cid).orElseThrow(() -> new NotFoundException("해당 카트를 찾을 수 없습니다. : " + cid));
 
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
@@ -66,8 +64,6 @@ public class CartServiceImpl implements CartService {
         List<ProductsDTO> productsDTOList = cartDTO.getProducts();
 
         // 2. ProductsDTO -> Products 매핑하면서, 해당 cart에 있는 psid 가져오기
-
-
 
         List<Products> productList = productsDTOList.stream().map(
                 productsDTO -> {

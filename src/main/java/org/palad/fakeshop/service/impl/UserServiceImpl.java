@@ -3,7 +3,7 @@ package org.palad.fakeshop.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
-import org.palad.fakeshop.controller.exception.UserNotFoundException;
+import org.palad.fakeshop.controller.exception.NotFoundException;
 import org.palad.fakeshop.domain.user.User;
 import org.palad.fakeshop.dto.user.UserDTO;
 import org.palad.fakeshop.infra.repository.UserRepository;
@@ -29,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final Long DEFAULT_USERS_COUNT = 10L;
+
     @Override
     public List<UserDTO> getList() {
         List<UserDTO> dtoList = new ArrayList<>();
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO getUserById(String uid) {
-        User user = userRepository.findById(Long.parseLong(uid)).orElseThrow(() -> new UserNotFoundException("User not found : " + uid));
+        User user = userRepository.findById(Long.parseLong(uid)).orElseThrow(() -> new NotFoundException("User not found : " + uid));
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         return userDTO;
     }
@@ -64,8 +66,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getUsersWithSort(String sort) {
-
-
         if (!(sort.equals("asc") || sort.equals("desc"))) {
             throw new IllegalArgumentException("sort의 값은 'desc', 'asc' 외엔 입력할 수 없습니다.");
         }
@@ -77,8 +77,6 @@ public class UserServiceImpl implements UserService {
         } else {
             orders = Sort.by("uid").ascending();
         }
-
-
 
         Pageable pageable = PageRequest.of(0, 10, orders);
 
@@ -93,23 +91,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getUsersWithLimitAndSort(String limit, String sort) {
-        if (!(sort.equals("asc") || sort.equals("desc"))) {
-            throw new IllegalArgumentException("sort의 값은 'desc', 'asc' 외엔 입력할 수 없습니다.");
-        }
-
-        if(!limit.matches("\\d+")) {
-            throw new IllegalArgumentException("limit의 값은 숫자만 입력해주세요");
-        }
-
+        int size = Long.valueOf(userRepository.count()).intValue();
         Sort orders = null;
 
-        if(sort.equals("desc")) {
-            orders = Sort.by("uid").descending();
-        } else {
-            orders = Sort.by("uid").ascending();
+        if(sort != null) {
+            if (!(sort.equals("asc") || sort.equals("desc"))) {
+                throw new IllegalArgumentException("sort의 값은 'desc', 'asc' 외엔 입력할 수 없습니다.");
+            } else {
+                if(sort.equals("desc")) {
+                    orders = Sort.by("uid").descending();
+                } else {
+                    orders = Sort.by("uid").ascending();
+                }
+            }
         }
 
-        Pageable pageable = PageRequest.of(0, Integer.parseInt(limit), orders);
+        if(limit != null) {
+            if (!limit.matches("\\d+")) {
+                throw new IllegalArgumentException("limit의 값은 숫자만 입력해주세요");
+            } else {
+                size = Integer.parseInt(limit);
+            }
+        }
+
+        Pageable pageable = PageRequest.of(0, size, orders);
 
         List<User> userGroup = userRepository.findAll(pageable).toList();
 
@@ -122,7 +127,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO addUser(UserDTO userDTO) {
-
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
         User addedUser = userRepository.save(user);
@@ -137,7 +141,7 @@ public class UserServiceImpl implements UserService {
         }
 
         User user1 = userRepository.findById(userDTO.getUid()).orElseThrow(
-                () -> new UserNotFoundException("User not found : " + userDTO.getUid()));
+                () -> new NotFoundException("User not found : " + userDTO.getUid()));
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = modelMapper.map(userDTO, User.class);
@@ -148,8 +152,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO deleteUser(String uid) {
-
-        User user = userRepository.findById(Long.valueOf(uid)).orElseThrow(() -> new UserNotFoundException("User not found : " + uid));
+        User user = userRepository.findById(Long.valueOf(uid)).orElseThrow(() -> new NotFoundException("User not found : " + uid));
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         userRepository.deleteById(Long.valueOf(uid));
         return userDTO;

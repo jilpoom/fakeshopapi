@@ -4,12 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.File;
 
 @Data
 @Builder
@@ -19,15 +15,15 @@ public class ProductDTO {
 
     private Long pid;
 
-    @NotBlank
+    @NotNull(message = "타이틀을 입력해주세요 : title" )
     private String title;
 
-    @NotNull
+    @NotNull(message = "가격을 입력해주세요 : price")
     private Long price;
 
     private String description;
 
-    @NotBlank
+    @NotNull(message = "카테고리를 입력해주세요 : category")
     private String category;
 
     private String image;

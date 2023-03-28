@@ -2,15 +2,15 @@ package org.palad.fakeshop.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.palad.fakeshop.controller.exception.BindingResultMapper;
 import org.palad.fakeshop.dto.product.ProductDTO;
 import org.palad.fakeshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Sort;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,24 +20,17 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
+    private final BindingResultMapper bindingResultMapper;
     @Value("${fakeshop.upload.path}")
     private String uploadPath;
 
 
     @GetMapping()
     public List<ProductDTO> getProducts(@RequestParam(required = false) String limit,
-                                        @RequestParam(required = false) String sort) {
+                                        @RequestParam(required = false, defaultValue = "asc") String sort){
 
-        if (limit != null) {
-
-            return productService.getProductsWithLimit(Integer.parseInt(limit));
-        }
-
-        if (sort != null) {
-            Sort sorts = Sort.by("pid").descending();
-
-            if (sort.equals("desc")) return productService.getProductsWithSort(sorts);
+        if(limit != null || !sort.equals("asc")) {
+            return productService.getProductsWithLimitAndSort(limit, sort);
         }
 
         return productService.getList();
@@ -46,12 +39,7 @@ public class ProductController {
     @GetMapping("/{pid}")
     public ProductDTO getProduct(@PathVariable String pid) {
 
-        if (pid.matches("[A-Za-z](.*)")) {
-            throw new NumberFormatException("unvalid variable");
-        }
-
-
-        return productService.getProductById(Long.valueOf(pid));
+        return productService.getProductById(pid);
     }
 
     @GetMapping("/categories")
@@ -60,16 +48,16 @@ public class ProductController {
     }
 
     @GetMapping("/category/{category}")
-    public List<ProductDTO> getCategory(@PathVariable String category) {
+    public List<ProductDTO> getCategory(@PathVariable String category) throws IllegalArgumentException{
         return productService.getProductsByCategory(category);
     }
 
     @PostMapping
     public ProductDTO addProduct(@Valid @RequestBody ProductDTO productDTO,
-                                 BindingResult bindingResult) throws IOException {
+                                 BindingResult bindingResult) throws BindException{
 
-        if (bindingResult.hasErrors()) {
-
+        if(bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
         }
 
         return productService.addProduct(productDTO);
@@ -78,14 +66,17 @@ public class ProductController {
 
 
     @PutMapping()
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) {
-        log.info(productDTO);
+    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO, BindingResult bindingResult) throws BindException {
+        if(bindingResult.hasErrors()) {
+            throw new BindException(bindingResult);
+        }
+
         productService.updateProduct(productDTO);
         return productDTO;
     }
 
     @DeleteMapping("/{pid}")
-    public ProductDTO deleteProduct(@PathVariable Long pid) {
+    public ProductDTO deleteProduct(@PathVariable String pid) {
         log.info("DELETE : " + pid);
         ProductDTO dto = productService.getProductById(pid);
         productService.deleteProduct(pid);

@@ -2,7 +2,7 @@ package org.palad.fakeshop.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.palad.fakeshop.controller.exception.BindingResultMapper;
-import org.palad.fakeshop.controller.exception.UserNotFoundException;
+import org.palad.fakeshop.controller.exception.NotFoundException;
 import org.palad.fakeshop.dto.user.UserDTO;
 import org.palad.fakeshop.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -25,18 +25,10 @@ public class UserController {
 
     @GetMapping()
     public List<UserDTO> getAllUser(@RequestParam(required = false) String limit,
-                                    @RequestParam(required = false) String sort) throws IllegalArgumentException {
+                                    @RequestParam(required = false, defaultValue = "asc") String sort) throws IllegalArgumentException {
 
-        if (limit != null && sort != null) {
+        if(limit != null || !sort.equals("asc")) {
             return userService.getUsersWithLimitAndSort(limit, sort);
-        }
-
-        if (limit != null) {
-            return userService.getUsersWithLimit(limit);
-        }
-
-        if (sort != null) {
-            return userService.getUsersWithSort(sort);
         }
 
         return userService.getList();
@@ -44,7 +36,7 @@ public class UserController {
 
 
     @GetMapping("/{uid}")
-    public UserDTO getUser(@PathVariable String uid) throws UserNotFoundException {
+    public UserDTO getUser(@PathVariable String uid) throws NotFoundException {
         return userService.getUserById(uid);
     }
 
@@ -64,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping()
-    public ResponseEntity<?> updateUser(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) throws UserNotFoundException {
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UserDTO userDTO, BindingResult bindingResult) throws NotFoundException {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = bindingResultMapper.check(bindingResult);
             return ResponseEntity.badRequest().body(errors);
@@ -75,7 +67,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{uid}")
-    public UserDTO deleteUser(@PathVariable String uid) throws UserNotFoundException{
+    public UserDTO deleteUser(@PathVariable String uid) throws NotFoundException {
         return userService.deleteUser(uid);
     }
 
@@ -84,9 +76,6 @@ public class UserController {
         return sort.equals("desc");
     }
 
-    private boolean isAsc(String sort) {
-        return sort.equals("asc");
-    }
 
 
 }
