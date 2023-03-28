@@ -3,20 +3,17 @@ package org.palad.fakeshop.repository;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.palad.fakeshop.controller.exception.NotFoundException;
 import org.palad.fakeshop.domain.cart.Cart;
 import org.palad.fakeshop.domain.cart.Products;
-import org.palad.fakeshop.domain.product.Product;
 import org.palad.fakeshop.domain.user.User;
 import org.palad.fakeshop.infra.repository.CartRepository;
-import org.palad.fakeshop.infra.repository.ProductRepository;
 import org.palad.fakeshop.infra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +102,17 @@ public class CartRepositoryTests {
     @Test
     @DisplayName("Cart Update")
     public void cartUpdate() {
+
+    }
+
+    @Test
+    @DisplayName("날짜 범위별 Cart 가져오기")
+    @Transactional
+    public void cartsBetweenDate(){
+        List<Cart> cartGroup = cartRepository.findByDateBetween(LocalDate.of(2023, 3, 10),
+                LocalDate.of(2023, 3, 31)).orElseThrow(() -> new NotFoundException("cart를 찾을 수 없습니다."));
+
+        cartGroup.forEach(cart -> log.info(cart));
 
     }
 

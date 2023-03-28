@@ -9,11 +9,27 @@ public interface ProductService {
 
     List<ProductDTO> getList();
 
-    ProductDTO getProductById(Long pid);
+    ProductDTO getProductById(String pid);
 
+    /**
+     * 23-03-27 14:50 Deprecated : <br>
+     * getProductsWithLimitAndSort 메소드 사용 권장
+     * @param limit
+     * @return List
+     */
+    @Deprecated
     List<ProductDTO> getProductsWithLimit(int limit);
 
+    /**
+     * 23-03-27 14:23 Deprecated : <br>
+     * getProductsWithLimitAndSort 메소드 사용 권장
+     * @param sort
+     * @return List
+     */
+    @Deprecated
     List<ProductDTO> getProductsWithSort(Sort sort);
+
+    List<ProductDTO> getProductsWithLimitAndSort(String limit, String sort);
 
     List<String> getCategories();
 
@@ -23,5 +39,5 @@ public interface ProductService {
 
     ProductDTO updateProduct(ProductDTO productDTO);
 
-    void deleteProduct(Long pid);
+    void deleteProduct(String pid);
 }

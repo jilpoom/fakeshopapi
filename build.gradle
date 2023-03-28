@@ -46,7 +46,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     implementation 'org.hibernate.validator:hibernate-validator:6.1.5.Final'
     
-
     //OAuth2
     implementation 'org.springframework.security:spring-security-oauth2-client'
 
